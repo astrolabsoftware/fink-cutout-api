@@ -2,12 +2,16 @@
 
 This API is used internally by Fink web components to retrieve cutouts from the data lake on HDFS. We take advantage of the pyarrow connector to read parquet files to efficiently extract required cutouts from an HDFS block.
 
+## Requirements
+
+You will need Python installed (>=3.11) with requirements listed in `requirements.txt`. You wiil also need Hadoop installed on the machine (see `install/`).
+
 ## Usage
 
 To deploy the API, you need access to the Fink HDFS cluster. Once `config.yml` is filled, just deploy using:
 
 ```bash
-python cutout_app.py
+python app.py
 ```
 
 ## Accessing 2D cutout
