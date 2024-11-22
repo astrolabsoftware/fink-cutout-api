@@ -28,7 +28,7 @@ r = requests.post(
     }
 )
 
-cutout = json.loads(r.content)
+cutout = json.loads(r.content)[0]
 ```
 
 Note that `HDFS_PATH` should be an URI relative to the user home folder on HDFS, e.g.:
@@ -49,7 +49,7 @@ You can easily retrieve the original FITS file stored in the alert from your ter
 ```bash
 curl -H "Content-Type: application/json" \
     -X POST -d \
-    '{"hdfsPath":HDFS_PATH, "objectId":"ZTF21aaxtctv", "kind":"Science", "return_type": "FITS"}' \
+    '{"hdfsPath":HDFS_PATH, "objectId":"ZTF24abssjsb", "kind":"Science", "return_type": "FITS"}' \
     URL/api/v1/cutouts -o cutoutScience.fits
 ```
 
