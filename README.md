@@ -90,3 +90,7 @@ Once the app is deployed (need credentials), simply trigger:
 ```bash
 python tests/api_test.py URL
 ```
+
+## Performances
+
+For a single object, we obtain about 0.17 +/- 0.02 seconds for a single cutout, and 0.31 +/- 0.02 seconds for the 3 cutouts. Note it depends highly on the block size on HDFS. For ZTF, the block size in the datalake are about 100MB.
