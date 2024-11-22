@@ -110,7 +110,7 @@ def test_integrity() -> None:
     """
     data1 = cutouttest(kind="Science", return_type="array")
     data2 = cutouttest(kind="Science", return_type="FITS")
-    assert np.alltrue(data1[0] == data2[0].data)
+    assert np.all(data1[0] == data2[0].data)
 
 
 # def test_candid_cutout() -> None:
