@@ -14,7 +14,7 @@
 # limitations under the License.
 import flask
 from flask import request, jsonify
-from fink_cutout_api.utils import format_and_send_cutout
+from apps.utils import format_and_send_cutout
 
 app = flask.Flask(__name__)
 
