@@ -52,7 +52,7 @@ def cutouts_arguments():
     """Obtain information about the cutouts service"""
     if len(request.args) > 0:
         # POST from query URL
-        return jsonify({"data": return_cutouts(payload=request.args)})
+        return return_cutouts(payload=request.args)
     else:
         return jsonify({"args": args_cutouts})
 

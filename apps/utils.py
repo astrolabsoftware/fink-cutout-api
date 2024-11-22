@@ -12,6 +12,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from flask import Response, jsonify, send_file
+
 import io
 import gzip
 import yaml
@@ -70,6 +72,15 @@ def format_and_send_cutout(payload: dict) -> pd.DataFrame:
 
     return_type = payload.get("return_type", "array")
 
+    # If FITS or PNG is chosen, only one cutout is allowed
+    if return_type in ["FITS", "PNG"]:
+        if payload["kind"] == "All":
+            rep = {
+                "status": "error",
+                "text": "return_type=All is not allowed for FITS or PNG.\n",
+            }
+            return Response(str(rep), 400)
+
     filters = [["objectId", "=", payload["objectId"]]]
     if "candid" in payload:
         filters.append(["candid", "=", payload["candid"]])
@@ -90,4 +101,12 @@ def format_and_send_cutout(payload: dict) -> pd.DataFrame:
     for col in columns[1:]:
         cutouts.append(readstamp(dic[col][0]["stampData"], return_type=return_type))
 
-    return cutouts
+    if return_type == "array":
+        return jsonify({"data": cutouts})
+    elif return_type == "FITS":
+        return send_file(
+            cutout[0],
+            mimetype="application/octet-stream",
+            as_attachment=True,
+            download_name=payload["objectId"] + ".fits",
+        )
