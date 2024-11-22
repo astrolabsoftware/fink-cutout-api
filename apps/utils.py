@@ -72,12 +72,12 @@ def format_and_send_cutout(payload: dict) -> pd.DataFrame:
 
     return_type = payload.get("return_type", "array")
 
-    # If FITS or PNG is chosen, only one cutout is allowed
-    if return_type in ["FITS", "PNG"]:
+    # If FITS is chosen, only one cutout is allowed
+    if return_type == "FITS":
         if payload["kind"] == "All":
             rep = {
                 "status": "error",
-                "text": "return_type=All is not allowed for FITS or PNG.\n",
+                "text": "return_type=All is not allowed for FITS.\n",
             }
             return Response(str(rep), 400)
 
