@@ -39,6 +39,11 @@ args_cutouts = [
         "required": False,
         "description": "Candidate ID of the alert. If not provided, the cutouts of the latest alert is returned",
     },
+    {
+        "name": "return_type",
+        "required": False,
+        "description": "Returned type among `array` or `FITS`. If not provided, `array` is chosen.",
+    },
 ]
 
 
@@ -59,7 +64,9 @@ def return_cutouts(payload=None):
     if payload is None:
         payload = request.json
 
+    # Make some checks
     assert payload["kind"] in ["Science", "Template", "Difference", "All"]
+    assert payload["objectId"].startswith("ZTF")
 
     return format_and_send_cutout(payload)
 

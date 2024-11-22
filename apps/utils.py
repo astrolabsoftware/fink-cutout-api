@@ -68,6 +68,8 @@ def format_and_send_cutout(payload: dict) -> pd.DataFrame:
     else:
         raise AssertionError("`col_kind` must be one of Science, Template, Difference, or All.")
 
+    return_type = payload.get("return_type", "array")
+
     filters = [["objectId", "=", payload["objectId"]]]
     if "candid" in payload:
         filters.append(["candid", "=", payload["candid"]])
@@ -86,6 +88,6 @@ def format_and_send_cutout(payload: dict) -> pd.DataFrame:
     dic = table.to_pydict()
     cutouts = []
     for col in columns[1:]:
-        cutouts.append(readstamp(dic[col][0]["stampData"]))
+        cutouts.append(readstamp(dic[col][0]["stampData"], return_type=return_type))
 
     return cutouts
