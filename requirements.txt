@@ -1,0 +1,4 @@
+astropy
+pyarrow
+pandas
+requests
