@@ -26,11 +26,10 @@ from astropy.io import fits
 
 
 def readstamp(stamp: str, return_type="array", gzipped=True):
-    """
-    """
+    """ """
+
     def extract_stamp(fitsdata):
-        """
-        """
+        """ """
         with fits.open(fitsdata, ignore_missing_simple=True) as hdul:
             if return_type == "array":
                 data = hdul[0].data.tolist()
@@ -48,6 +47,7 @@ def readstamp(stamp: str, return_type="array", gzipped=True):
             return extract_stamp(io.BytesIO(f.read()))
     else:
         return extract_stamp(stamp)
+
 
 def format_and_send_cutout(payload: dict) -> pd.DataFrame:
     """Extract data returned by HBase and jsonify it
@@ -68,7 +68,9 @@ def format_and_send_cutout(payload: dict) -> pd.DataFrame:
     elif payload["kind"] in ["Science", "Template", "Difference"]:
         columns = ["objectId", "cutout{}".format(payload["kind"])]
     else:
-        raise AssertionError("`col_kind` must be one of Science, Template, Difference, or All.")
+        raise AssertionError(
+            "`col_kind` must be one of Science, Template, Difference, or All."
+        )
 
     return_type = payload.get("return_type", "array")
 
@@ -97,9 +99,10 @@ def format_and_send_cutout(payload: dict) -> pd.DataFrame:
     )
     # TODO: check the table is not empty
     dic = table.to_pydict()
-    cutouts = []
-    for col in columns[1:]:
-        cutouts.append(readstamp(dic[col][0]["stampData"], return_type=return_type))
+    cutouts = [
+        readstamp(dic[col][0]["stampData"], return_type=return_type)
+        for col in columns[1:]
+    ]
 
     if return_type == "array":
         return jsonify(cutouts)

@@ -70,6 +70,7 @@ def return_cutouts(payload=None):
 
     return format_and_send_cutout(payload)
 
+
 if __name__ == "__main__":
     import yaml
 
