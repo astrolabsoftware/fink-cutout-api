@@ -102,7 +102,7 @@ def format_and_send_cutout(payload: dict) -> pd.DataFrame:
         cutouts.append(readstamp(dic[col][0]["stampData"], return_type=return_type))
 
     if return_type == "array":
-        return jsonify({"data": cutouts})
+        return jsonify(cutouts)
     elif return_type == "FITS":
         return send_file(
             cutouts[0],
