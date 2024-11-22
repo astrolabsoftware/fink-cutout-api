@@ -105,7 +105,7 @@ def format_and_send_cutout(payload: dict) -> pd.DataFrame:
         return jsonify({"data": cutouts})
     elif return_type == "FITS":
         return send_file(
-            cutout[0],
+            cutouts[0],
             mimetype="application/octet-stream",
             as_attachment=True,
             download_name=payload["objectId"] + ".fits",
