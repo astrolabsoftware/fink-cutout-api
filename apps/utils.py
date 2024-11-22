@@ -85,7 +85,7 @@ def format_and_send_cutout(payload: dict) -> pd.DataFrame:
 
     filters = [["objectId", "=", payload["objectId"]]]
     if "candid" in payload:
-        filters.append(["candid", "=", payload["candid"]])
+        filters.append(["candid", "=", int(payload["candid"])])
 
     args = yaml.load(open("config.yml"), yaml.Loader)
     hdfs = fs.HadoopFileSystem(args["HDFS"], args["HDFSPORT"], user=args["HDFSUSER"])
