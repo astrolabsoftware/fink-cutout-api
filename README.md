@@ -1,5 +1,7 @@
 # Fink cutout API
 
+[![Sentinel](https://github.com/astrolabsoftware/fink-cutout-api/workflows/Sentinel/badge.svg)](https://github.com/astrolabsoftware/fink-cutout-api/actions?query=workflow%3ASentinel)
+
 ![structure](.github/API_fink.png)
 
 This API is used internally by Fink web components to retrieve cutouts from the data lake on HDFS. We take advantage of the pyarrow connector to read parquet files to efficiently extract required cutouts from an HDFS block.
