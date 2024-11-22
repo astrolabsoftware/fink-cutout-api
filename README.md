@@ -72,3 +72,11 @@ r = requests.post(
 
 cutout = fits.open(io.BytesIO(r.content), ignore_missing_simple=True)
 ```
+
+## Tests
+
+Once the app is deployed (need credentials), simply trigger:
+
+```bash
+python tests/api_test.py URL
+```

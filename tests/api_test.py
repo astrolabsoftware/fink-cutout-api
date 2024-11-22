@@ -23,7 +23,8 @@ import json
 
 APIURL = sys.argv[1]
 
-TESTFILE="archive/science/year=2024/month=11/day=14/part-00019-14b4d19b-5bd1-4a33-a3d2-d7484c407981.c000.snappy.parquet"
+TESTFILE = "archive/science/year=2024/month=11/day=14/part-00019-14b4d19b-5bd1-4a33-a3d2-d7484c407981.c000.snappy.parquet"
+
 
 def cutouttest(
     objectId="ZTF24abssjsb",
@@ -56,6 +57,7 @@ def cutouttest(
 
 def test_fits_cutout() -> None:
     """
+
     Examples
     --------
     >>> test_fits_cutout()
@@ -68,6 +70,7 @@ def test_fits_cutout() -> None:
 
 def test_array_cutout() -> None:
     """
+
     Examples
     --------
     >>> test_array_cutout()
@@ -80,6 +83,7 @@ def test_array_cutout() -> None:
 
 def test_kind_cutout() -> None:
     """
+
     Examples
     --------
     >>> test_kind_cutout()
@@ -99,6 +103,7 @@ def test_kind_cutout() -> None:
 
 def test_integrity() -> None:
     """
+
     Examples
     --------
     >>> test_integrity()
@@ -108,7 +113,7 @@ def test_integrity() -> None:
     assert np.alltrue(data1[0] == data2[0].data)
 
 
-#def test_candid_cutout() -> None:
+# def test_candid_cutout() -> None:
 #    """
 #    Examples
 #    --------
