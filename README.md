@@ -8,7 +8,7 @@ This API is used internally by Fink web components to retrieve cutouts from the 
 
 ## Requirements and installation
 
-You will need Python installed (>=3.11) with requirements listed in `requirements.txt`. You wiil also need Hadoop installed on the machine (see `install/`), and Java 11 (at least). For the installation, refer as to the [procedure](install/README.md).
+You will need Python installed (>=3.11) with requirements listed in `requirements.txt`. You wiil also need Hadoop installed on the machine, and Java 11 (at least). For the full installation and deployment, refer as to the [procedure](install/README.md).
 
 ## Usage
 

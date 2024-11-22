@@ -1,4 +1,6 @@
-# API deployment
+# API installation and deployment
+
+Fire a Virtual Machine, and follow instructions. Work perfectly on recent AlmaLinux.
 
 ## Python dependencies
 
@@ -6,7 +8,7 @@ Clone this repository, and install all python dependencies:
 
 ```bash
 pip install -r requirements.txt
-``
+```
 
 ## Hadoop installation
 
