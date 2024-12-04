@@ -3,3 +3,4 @@ pyarrow
 pandas
 requests
 flask
+gunicorn
