@@ -6,6 +6,23 @@
 
 This API is used internally by Fink web components to retrieve cutouts from the data lake on HDFS. We take advantage of the pyarrow connector to read parquet files to efficiently extract required cutouts from an HDFS block.
 
+## Motivation
+
+Each night, Fink processes alerts and stores them in the datalake as parquet files. Additionally, we transfered data to HBase tables to support various services. This approach allowed for efficient data exposure once the data is in the tables.
+
+However, this has led to numerous issues that outweigh the benefits. One of the most critical tasks during data writing is populating the main table, which includes both lightcurve and cutout data. Frequently, HBase crashes for extended periods—sometimes lasting minutes or even hours—resulting in downtime for all services. Furthermore, cutout data constitutes a significant portion of our storage needs (XX%, equating to YYTB), yet much of it remains rarely accessed.
+
+Since cutouts are already stored in the datalake, if we can develop a quick access method, we can eliminate the need to transfer them to tables. This change would also lead to substantial savings in storage space and costs. This observation has led to the development of this API.
+
+The fundamental mechanism is to store cutout metadata in HBase and leverage the capabilities of `pyarrow` to read parquet files stored in HDFS. This is slower than accessing cutouts from the HBase table:
+
+| | time/cutout (second)|
+|--------|--------------|
+| HBase | 0.5 |
+| pyarrow/HDFS | 1.2 |
+
+But a factor of 2 slower is not too bad compared to the hundreds of TB saved (estimation about 30k EUR saved for the duration of the project!).
+
 ## Requirements and installation
 
 You will need Python installed (>=3.11) with requirements listed in `requirements.txt`. You wiil also need Hadoop installed on the machine, and Java 11 (at least). For the full installation and deployment, refer as to the [procedure](install/README.md).
@@ -93,4 +110,4 @@ python tests/api_test.py URL
 
 ## Performances
 
-For a single object, we obtain about 0.17 +/- 0.02 seconds for a single cutout, and 0.31 +/- 0.02 seconds for the 3 cutouts. Note it depends highly on the block size on HDFS. For ZTF, the block size in the datalake are about 100MB.
+For a single object, we obtain about 0.17 +/- 0.02 seconds for a single cutout, and 0.31 +/- 0.02 seconds for the 3 cutouts. Note it depends highly on the block size on HDFS and the load of the file system. For ZTF, the block size in the datalake are about 100MB.
