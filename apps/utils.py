@@ -21,6 +21,7 @@ import yaml
 import pandas as pd
 from pyarrow import fs
 import pyarrow.parquet as pq
+import pyarrow.dataset as ds
 
 from astropy.io import fits
 
@@ -130,9 +131,14 @@ def format_and_send_cutout_from_lsst(payload: dict) -> pd.DataFrame:
     out: pandas dataframe
     """
     if payload["kind"] == "All":
-        columns = ["diaObjectId", "cutoutScience", "cutoutTemplate", "cutoutDifference"]
+        columns = [
+            "diaObject.diaObjectId",
+            "cutoutScience",
+            "cutoutTemplate",
+            "cutoutDifference",
+        ]
     elif payload["kind"] in ["Science", "Template", "Difference"]:
-        columns = ["diaObjectId", "cutout{}".format(payload["kind"])]
+        columns = ["diaObject.diaObjectId", "cutout{}".format(payload["kind"])]
     else:
         raise AssertionError(
             "`col_kind` must be one of Science, Template, Difference, or All."
@@ -149,9 +155,11 @@ def format_and_send_cutout_from_lsst(payload: dict) -> pd.DataFrame:
             }
             return Response(str(rep), 400)
 
-    filters = [["diaObjectId", "=", payload["diaObjectId"]]]
+    filters = ds.field("diaObject", "diaObjectId") == int(payload["diaObjectId"])
     if "diaSourceId" in payload:
-        filters.append(["diaSourceId", "=", int(payload["diaSourceId"])])
+        filters = filters & ds.field("diaSource", "diaSourceId") == int(
+            payload["diaSourceId"]
+        )
 
     args = yaml.load(open("config.yml"), yaml.Loader)
     hdfs = fs.HadoopFileSystem(args["HDFS"], args["HDFSPORT"], user=args["HDFSUSER"])
