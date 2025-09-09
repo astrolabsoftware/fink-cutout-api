@@ -70,7 +70,7 @@ Group=root
 WorkingDirectory=/opt/fink-cutout-api
 Restart=on-failure
 RestartSec=5s
-ExecStart=/bin/sh -c 'source /root/.bashrc; exec /opt/fink-env/bin/gunicorn --log-file=/tmp/fink_cutout_api.log app:app -b localhost:PORT --workers=2 --threads=8 --timeout 180 --chdir /opt/fink-cutout-api --bind unix:/run/fink_cutout_api.sock 2>&1 >> /tmp/fink_cutout_api.out'
+ExecStart=/bin/sh -c 'source /root/.bashrc; exec /opt/fink-env/bin/gunicorn --log-file=/tmp/fink_cutout_api.log app_lsst:app -b localhost:PORT --workers=2 --threads=8 --timeout 180 --chdir /opt/fink-cutout-api --bind unix:/run/fink_cutout_api.sock 2>&1 >> /tmp/fink_cutout_api.out'
 
 [Install]
 WantedBy=multi-user.target
