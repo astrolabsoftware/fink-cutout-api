@@ -14,7 +14,7 @@
 # limitations under the License.
 import flask
 from flask import request, jsonify
-from apps.utils import format_and_send_cutout
+from apps.utils import format_and_send_cutout_from_ztf
 
 app = flask.Flask(__name__)
 
@@ -68,7 +68,7 @@ def return_cutouts(payload=None):
     assert payload["kind"] in ["Science", "Template", "Difference", "All"]
     assert payload["objectId"].startswith("ZTF")
 
-    return format_and_send_cutout(payload)
+    return format_and_send_cutout_from_ztf(payload)
 
 
 if __name__ == "__main__":
