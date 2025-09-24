@@ -25,19 +25,14 @@ args_cutouts = [
         "description": "Data path on HDFS",
     },
     {
-        "name": "diaObjectId",
+        "name": "diaSourceId",
         "required": True,
-        "description": "Rubin Object ID",
+        "description": "diaSource ID of the alert",
     },
     {
         "name": "kind",
         "required": True,
         "description": "Science, Template, Difference, or All",
-    },
-    {
-        "name": "diaSourceId",
-        "required": False,
-        "description": "diaSource ID of the alert. If not provided, the cutouts of the latest alert is returned",
     },
     {
         "name": "return_type",
